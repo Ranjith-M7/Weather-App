@@ -22,7 +22,7 @@ body {
   background-size: cover;
   background-position: center;
   color: #ffffff;
-  transition: all 0.5s ease-in;
+  transition: all 0.4s ease-in;
   opacity: 0;
 }
 .weather-app::before {
@@ -96,6 +96,7 @@ form .search {
   font-size: 1.1rem;
   outline: none;
 }
+
 form .submit {
   position: absolute;
   top: 0;
@@ -109,8 +110,7 @@ form .submit {
   transition: 0.3s;
 }
 form .submit:hover {
-  background: #fff;
-  color: #111;
+  color: #ffffff;
 }
 .search::placeholder {
   color: #ccc;
