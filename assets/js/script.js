@@ -191,5 +191,3 @@ function fetchWeatherData() {
 
 // call the function on page loads
 fetchWeatherData();
-
-
