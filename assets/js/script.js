@@ -68,7 +68,6 @@ function fetchWeatherData() {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       // add the temparature and weather condition to the page
       temp.innerHTML = data.current.temp_c + "&#176";
       condition.innerHTML = data.current.condition.text;
@@ -78,7 +77,6 @@ function fetchWeatherData() {
 
       // get the time and date from the city and extract the day,year,month, time and stores into individual variables
       const date = data.location.localtime;
-      console.log("London time: " + date);
       const y = parseInt(date.substr(0, 4));
       const m = date.substr(5, 2);
       const d = date.substr(8, 2);
