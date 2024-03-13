@@ -14,32 +14,26 @@
 
 <body>
     <div class="weather-app">
-        <div class="container">
-            <h3 class="brand">the weather</h3>
-            <div>
+        <div class="main-panel">
+            <h3 class="brand-name">the.weather</h3>
+            <div class="content">
                 <h1 class="temp">16&#176;</h1>
                 <div class="city-time">
-                    <h1 class="name"></h1>
-                    <small>
-                        <span class="time">06:09</span>
-                        -
-                        <span class="date">
-                            Monday Sep 19
-                        </span>
-                    </small>
+                    <h1 class="name">London</h1>
+                    <span class="time">06:09</span>
+                    -
+                    <span class="date">Monday, 9 Sep '19</span>
                 </div>
-                <div class="weather">
-                    <img src="./assets/icons/day/113.png" class="icon" width="50" height="50" alt="icon">
+                <div class="weather-condition">
+                    <img src="./assets/icons/day/122.png" class="icon" width="50" height="50" alt="icon">
                     <span class="condition">Cloudy</span>
                 </div>
             </div>
         </div>
-        <div class="panel">
+        <div class="side-panel">
             <form id="locationInput">
-                <input type="text" class="search" placeholder="search Location...">
-                <button type="submit" class="submit">
-                    <i class="fas fa-search"></i>
-                </button>
+                <input type="text" class="search" placeholder="Search location..."><button type="submit" class="submit"><i
+                        class="fas fa-search"></i></button>
             </form>
             <ul class="cities">
                 <li class="city">New York</li>
@@ -47,15 +41,15 @@
                 <li class="city">Paris</li>
                 <li class="city">Tokyo</li>
             </ul>
-            <ul class="details">
+            <ul class="weather-details">
                 <h4>Weather Details</h4>
                 <li>
                     <span>Cloudy</span>
-                    <span class="cloud">89%</span>
+                    <span class="cloud">86%</span>
                 </li>
                 <li>
                     <span>Humidity</span>
-                    <span class="Humidity">64%</span>
+                    <span class="humidity">62%</span>
                 </li>
                 <li>
                     <span>Wind</span>

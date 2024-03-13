@@ -4,123 +4,128 @@ const nameOutput = document.querySelector(".name");
 const timeOutput = document.querySelector(".time");
 const dateOutput = document.querySelector(".date");
 const icon = document.querySelector(".icon");
-const conditionOutput = document.querySelector(".condition");
+const condition = document.querySelector(".condition");
 const form = document.querySelector("#locationInput");
 const search = document.querySelector(".search");
 const btn = document.querySelector(".submit");
 const cities = document.querySelectorAll(".city");
-const cloudOutput = document.querySelector(".cloud");
-const humidityOutput = document.querySelector(".Humidity");
-const windOutput = document.querySelector(".wind");
+const cloud = document.querySelector(".cloud");
+const humidity = document.querySelector(".humidity");
+const wind = document.querySelector(".wind");
 
-// Default city when the page loads
-let cityInput = "Japan";
+// default city when the page loads
+let cityInput = "London";
 
-// Add click event to each city in the panel
+// add click event to each city in the panel
 cities.forEach((city) => {
   city.addEventListener("click", (e) => {
-    // Changed from default city to the clicked one
+    // changed from default city to the clicked one
     cityInput = e.target.innerHTML;
-    /* Function that fetches and displays all the data from the weather API*/
+    // function to fetches and displays data from the weather API
     fetchWeatherData();
-    // Fade out the app (simple animation)
-    app.style.opacity = "1";
+    //fade out the app
+    app.style.opacity = "0";
   });
 });
 
-// Add submit event to the form
+// add submit event to the form
 form.addEventListener("submit", (e) => {
-  /* If the inout  field is empty throw an error*/
   if (search.value.length == 0) {
-    alert("Please type in a city name");
+    alert("Please type a city name");
   } else {
-    /* change from default city to the one written in the input field*/
+    // changed from default city to the searched one
     cityInput = search.value;
-    /* function that fetches and displays all the data from the weather API*/
+    console.log(cityInput);
+    // function that fetches and displays the data from weather API
     fetchWeatherData();
-    // remove all text from the input field
+    // clear the input field
     search.value = "";
-    // fade out the app (simple animation)
-    app.style.opacity = "1";
+    // fade out the app
+    app.style.opacity = "0";
   }
-  // Prevent the dafault behaviour of the form
+  // prevent the default behavior of the form
   e.preventDefault();
 });
-
-/* Function that returns a day of the week
-(monday, tuesday,friday...) from a date(12 02 2021)*/
+// function that returns a day of the week
 function dayOfTheWeek(day, month, year) {
   const weekday = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
   ];
-  return weekday[new Date(`${day}/${month}/${year}`).getDay()];
+  return weekday[new Date(`${year},${month},${day}`).getDay()];
 }
 
-/* Function that fetches and displays the data from the weather API */
+// function that fetches and displays the data from the weather API
 function fetchWeatherData() {
-  /*fetch the data and dynamically add the city name and template literals */
+  // fetch the data and dynamically add the city name and template literals
   fetch(
     `http://api.weatherapi.com/v1/current.json?key=a2c2c4a2cb6c40f094152332241203&q=${cityInput}`
   )
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      /*Adding the temparature and weather condition to the page */
-      temp.innerHTML = data.current.temp_c + "&#176;";
-      conditionOutput.innerHTML = data.current.condition.text;
-      /*Get the date and time from the city and extract the day, month, year and time into individual variables */
-      const date = data.location.localtime;
-      const y = parseInt(date.substr(0, 4));
-      const m = parseInt(date.substr(5, 2));
-      const d = parseInt(date.substr(8, 2));
-      const time = date.substr(11);
-      /*Reformat the date into something more appeal and add it to the page */
-      /*original format: 2021-10-09 17:53 */
-      /*New format: 17:53 - Friday 9, 10, 2021*/
-      dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d},${m} ${y}`;
-      timeOutput.innerHTML = time;
-      /*add the name of the city into the page */
+      // add the temparature and weather condition to the page
+      temp.innerHTML = data.current.temp_c + "&#176";
+      condition.innerHTML = data.current.condition.text;
+
+      // add the name of the city to the page
       nameOutput.innerHTML = data.location.name;
-      /*get the corresponding icon url for the weather and extract a part of it */
+
+      // get the time and date from the city and extract the day,year,month, time and stores into individual variables
+      const date = data.location.localtime;
+      console.log("London time: " + date);
+      const y = parseInt(date.substr(0, 4));
+      const m = date.substr(5, 2);
+      const d = date.substr(8, 2);
+      const time = date.substr(11);
+
+      /*Reformat the date*/
+      /*original format: 2024-10-09 17:53 /*
+      /*New format: 17:53 - Friday 9, 10, 2024*/
+      dateOutput.innerHTML = `${dayOfTheWeek(d, m, y)} ${d}, ${m}, ${y}`;
+      timeOutput.innerHTML = time;
+
+      //       code: 1009
+      // get the corresponding icon url from the weather and extract a part of it
       const iconId = data.current.condition.icon.substr(
-        "//cdn.weatherapi.com/weather/64x64/".length
+        `//cdn.weatherapi.com/weather/64x64/`.length
       );
-      /*Reformat the icon url to your own local folder path and add it to the page */
-      icon.src = "./icons/" + iconId;
-      console.log(icon.src);
 
-      // add the weather details to the page
-      cloudOutput.innerHTML = data.current.cloud + "%";
+      // reformat the icon url to own folder path and display the icon to the page
+      icon.src = `/assets/icons/${iconId}`;
 
-      humidityOutput.innerHTML = data.current.humidity = "%";
-      windOutput.innerHTML = data.current.wind_kph + "km/h";
+      // add the cloud, humidity, wind details to the page
+      cloud.innerHTML = data.current.cloud + "%";
+      humidity.innerHTML = data.current.humidity + "%";
+      wind.innerHTML = data.current.wind_kph + " km/h";
 
       // set default time of day
       let timeOfDay = "day";
+
+      // change to night if it's night time
+      if (!data.current.is_day == 1) {
+        timeOfDay = "night";
+      }
+
       // get the unique id for each weather condition
       const code = data.current.condition.code;
 
-      //change the night if its night time in the city
-      if (!data.current.is_day) {
-        timeOfDay = "night";
-      }
+      // for clear weather
       if (code == 1000) {
-        /*set the background image is clear if the weather is clear */
+        // set the clear background image when the weather is clear
         app.style.backgroundImage = `url(/assets/images/${timeOfDay}/clear.jpg)`;
-
-        /*change the button bg color depending on if its day or night */
-        btn.style.background = "#e5ba92";
+        // change the button clr depend on if its day or night
+        btn.style.background = `#e5ba92`;
         if (timeOfDay == "night") {
-          btn.style.background = "#181e27";
+          btn.style.background = `#181e27`;
         }
-      } else if (
-        /*same thing for cloudy weather */
+      } // for cloudy weather
+      else if (
         code == 1003 ||
         code == 1006 ||
         code == 1009 ||
@@ -133,13 +138,16 @@ function fetchWeatherData() {
         code == 1279 ||
         code == 1282
       ) {
+        // set the cloudy background image when the weather is cloudy
         app.style.backgroundImage = `url(/assets/images/${timeOfDay}/cloudy.jpg)`;
+
+        // change the btn clr depend on its day or night
         btn.style.background = "#fa6d1b";
         if (timeOfDay == "night") {
           btn.style.background = "#181e27";
         }
-        // and rain
-      } else if (
+      } // for rainy weather
+      else if (
         code == 1063 ||
         code == 1069 ||
         code == 1072 ||
@@ -159,29 +167,29 @@ function fetchWeatherData() {
         code == 1249 ||
         code == 1252
       ) {
+        // set the rainy background image when the weather is rainy
         app.style.backgroundImage = `url(/assets/images/${timeOfDay}/rainy.jpg)`;
+
+        // change the btn clr depend on its day or night
         btn.style.background = "#647d75";
         if (timeOfDay == "night") {
           btn.style.background = "#325c80";
         }
-        // and finally ... snow/
-      } else {
+      } // finally for snowy weather
+      else {
+        // set the snow background image when the weather is snowy
         app.style.backgroundImage = `url(/assets/images/${timeOfDay}/snowy.jpg)`;
-        btn.style.background = "#4d72aa";
-        if (timeOfDay == "night") {
-          btn.style.background = "#1b1b1b";
-        }
       }
-      // fade in the page once all is done
+
       app.style.opacity = "1";
     })
-    /**if the user types a city that doesn't exost, throw an alert */
     .catch(() => {
-      //   alert("city not found, please try again");
+      alert("City not found. Please enter a correct city name");
       app.style.opacity = "1";
     });
 }
-// call the function on page load
+
+// call the function on page loads
 fetchWeatherData();
-// fade out in the page
-app.style.opacity = "1";
+
+
