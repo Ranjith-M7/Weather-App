@@ -14,7 +14,7 @@ const humidity = document.querySelector(".humidity");
 const wind = document.querySelector(".wind");
 
 // default city when the page loads
-let cityInput = "London";
+let cityInput = "Tokyo";
 
 // add click event to each city in the panel
 cities.forEach((city) => {
