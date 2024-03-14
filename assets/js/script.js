@@ -63,7 +63,7 @@ function dayOfTheWeek(day, month, year) {
 function fetchWeatherData() {
   // fetch the data and dynamically add the city name and template literals
   fetch(
-    `http://api.weatherapi.com/v1/current.json?key=a2c2c4a2cb6c40f094152332241203&q=${cityInput}`
+    `https://api.weatherapi.com/v1/current.json?key=a2c2c4a2cb6c40f094152332241203&q=${cityInput}`
   )
     .then((response) => response.json())
     .then((data) => {
