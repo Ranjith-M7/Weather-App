@@ -12,8 +12,6 @@
 
 **Client:** HTML, CSS, JavaScript, Weather API
 
-
-
 ## Demo
 
 Check out the demo video for a walkthrough of the project.
@@ -61,5 +59,4 @@ Go to the project directory
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
 
