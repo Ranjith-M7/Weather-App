@@ -35,7 +35,6 @@ form.addEventListener("submit", (e) => {
   } else {
     // changed from default city to the searched one
     cityInput = search.value;
-    console.log(cityInput);
     // function that fetches and displays the data from weather API
     fetchWeatherData();
     // clear the input field
@@ -64,7 +63,7 @@ function dayOfTheWeek(day, month, year) {
 function fetchWeatherData() {
   // fetch the data and dynamically add the city name and template literals
   fetch(
-    `https://api.weatherapi.com/v1/current.json?key=a2c2c4a2cb6c40f094152332241203&q=${cityInput}`
+    `http://api.weatherapi.com/v1/current.json?key=a2c2c4a2cb6c40f094152332241203&q=${cityInput}`
   )
     .then((response) => response.json())
     .then((data) => {
